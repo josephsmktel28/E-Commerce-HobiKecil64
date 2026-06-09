@@ -82,17 +82,9 @@ RUN apk add --no-cache \
     supervisor \
     curl
 
-# Install PHP extensions (must match builder stage)
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-    pdo \
-    pdo_mysql \
-    gd \
-    bcmath \
-    intl \
-    zip \
-    exif \
-    pcntl
+# Copy PHP extensions from builder
+COPY --from=builder /usr/local/lib/php/extensions /usr/local/lib/php/extensions
+COPY --from=builder /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
 
 WORKDIR /var/www/html
 
