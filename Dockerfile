@@ -11,6 +11,7 @@ RUN apk add --no-cache \
     libjpeg-turbo-dev \
     freetype-dev \
     libzip-dev \
+    mysql-dev \
     zip \
     unzip \
     git \
@@ -22,7 +23,7 @@ RUN apk add --no-cache \
 
 # Install PHP extensions needed for Laravel
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
+    && docker-php-ext-install \
     pdo \
     pdo_mysql \
     gd \
