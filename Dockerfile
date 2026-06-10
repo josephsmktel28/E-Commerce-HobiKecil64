@@ -38,8 +38,15 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Copy composer files first for layer caching
+# Copy composer and application files needed for package discovery
 COPY composer.json composer.lock ./
+COPY artisan ./
+COPY bootstrap ./bootstrap
+COPY config ./config
+COPY routes ./routes
+COPY resources ./resources
+COPY database ./database
+COPY app ./app
 
 # Install PHP dependencies (no dev, optimized autoloader)
 RUN composer install \
